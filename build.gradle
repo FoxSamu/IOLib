@@ -1,0 +1,52 @@
+/*
+ * Copyright (c) 2019 RedGalaxySW
+ * Licensed under Apache Licence 2.0
+ */
+
+import org.gradle.api.publish.maven.MavenPublication
+import org.gradle.api.tasks.bundling.Jar
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'net.rgsw'
+version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+task sourceJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allJava
+}
+
+dependencies {
+}
+
+publishing {
+    publications {
+        maven( MavenPublication ) {
+            groupId = project.group
+            artifactId = 'noise'
+            version = project.version
+
+            from components.java
+            artifact tasks.sourceJar
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri( "https://maven.pkg.github.com/RedGalaxySW/IOLib" )
+            credentials {
+                username = gprUser.toLowerCase()
+                password = gprKey.toLowerCase()
+            }
+        }
+    }
+}
