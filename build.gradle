@@ -32,7 +32,7 @@ publishing {
     publications {
         maven( MavenPublication ) {
             groupId = project.group
-            artifactId = 'noise'
+            artifactId = 'io'
             version = project.version
 
             from components.java
