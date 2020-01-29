@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 RedGalaxySW
+ * Copyright (c) 2020 RedGalaxySW
  * Licensed under Apache Licence 2.0
  */
 
@@ -359,9 +359,7 @@ public class BMFFile implements Flushable, Closeable {
     }
 
     private synchronized void discardAllSectors() {
-        for( int i = 0; i < sectors.length; i++ ) {
-            sectors[ i ] = null;
-        }
+        Arrays.fill( sectors, null );
     }
 
 
@@ -632,7 +630,7 @@ public class BMFFile implements Flushable, Closeable {
         int oldSize = sectors.length;
         Sector[] old = sectors;
         sectors = new Sector[ newSize ];
-        System.arraycopy( old, 0, sectors, 0, oldSize < newSize ? oldSize : newSize );
+        System.arraycopy( old, 0, sectors, 0, Math.min( oldSize, newSize ) );
     }
 
     private synchronized void cleanSectorArray() {
@@ -654,7 +652,7 @@ public class BMFFile implements Flushable, Closeable {
     }
 
     private synchronized int getSectorCount() {
-        int count = 0;
+        int count = - 1;
         for( Sector s : sectors ) {
             if( s != null ) {
                 count = s.index;
@@ -889,7 +887,7 @@ public class BMFFile implements Flushable, Closeable {
         }
     }
 
-    private class EmptyInputStream extends InputStream {
+    private static class EmptyInputStream extends InputStream {
         @Override
         public int read() {
             return - 1;
