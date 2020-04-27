@@ -1,6 +1,8 @@
 /*
- * Copyright (c) 2020 RedGalaxySW
- * Licensed under Apache Licence 2.0
+ * Copyright (c) 2020 RedGalaxy & contributors
+ * All rights reserved. Do not distribute.
+ *
+ * For a full license, see LICENSE.txt
  */
 
 package net.rgsw.io;
